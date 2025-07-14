@@ -1,0 +1,26 @@
+# build artifacts
+bin/
+obj/
+
+# user-specific files
+*.user
+*.suo
+
+# vs configuration
+.vs/
+.vscode/
+
+# Local debug settings
+Properties/launchSettings.json
+
+# Local config files
+appsettings.json
+appsettings.Development.json
+appsettings.Production.json
+appsettings.Secrets.json
+appsettings.Local.json
+.env
+*.http
+
+# Migrations
+Migrations/*_Backup.cs

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36221.1 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BillStack_Backend", "BillStack_Backend\BillStack_Backend.csproj", "{4EDAC6C9-D9AB-42E1-80E6-E7DEBCF0293E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4EDAC6C9-D9AB-42E1-80E6-E7DEBCF0293E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EDAC6C9-D9AB-42E1-80E6-E7DEBCF0293E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EDAC6C9-D9AB-42E1-80E6-E7DEBCF0293E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EDAC6C9-D9AB-42E1-80E6-E7DEBCF0293E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FF3B60A5-C0C8-47CA-9E13-FEE4F1D39214}
+	EndGlobalSection
+EndGlobal
