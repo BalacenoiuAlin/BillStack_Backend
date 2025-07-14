@@ -2,6 +2,7 @@ using AutoMapper;
 using BillStack_Backend.Data;
 using BillStack_Backend.Mappings;
 using BillStack_Backend.Repositories;
+using BillStack_Backend.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,6 +17,7 @@ builder.Services.AddDbContext<BillStackDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("BillStackConnectionString")));
 
 builder.Services.AddScoped<IBillRepository, BillRepository>();
+builder.Services.AddScoped<IBillService, BillService>();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
