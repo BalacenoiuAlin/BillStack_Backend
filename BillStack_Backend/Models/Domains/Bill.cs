@@ -48,7 +48,7 @@ namespace BillStack_Backend.Models.Domains
         [Required]
         public Guid UserId { get; set; } // GetUserId for linking with users table via FK 
 
-        [ForeignKey("UserId")]
-        public Users User { get; set; }
+        //[ForeignKey("UserId")]
+        //public Users User { get; set; }
     }
 }

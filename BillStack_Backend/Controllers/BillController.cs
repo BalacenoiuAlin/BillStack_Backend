@@ -1,11 +1,13 @@
 ﻿using BillStack_Backend.Models.DTO;
 using BillStack_Backend.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BillStack_Backend.Controllers
 {
     [ApiController]
     [Route("api/[controller]")] //https:localhost:xxx/api/Bill
+    [Authorize]
     public class BillController : ControllerBase
     {
         private readonly IBillService billService;

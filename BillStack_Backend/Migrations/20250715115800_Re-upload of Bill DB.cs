@@ -6,26 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BillStack_Backend.Migrations
 {
     /// <inheritdoc />
-    public partial class Initialcommitwithcreationofbilltable : Migration
+    public partial class ReuploadofBillDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Role = table.Column<int>(type: "int", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Bills",
                 columns: table => new
@@ -47,18 +32,7 @@ namespace BillStack_Backend.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Bills", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Bills_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Bills_UserId",
-                table: "Bills",
-                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -66,9 +40,6 @@ namespace BillStack_Backend.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Bills");
-
-            migrationBuilder.DropTable(
-                name: "Users");
         }
     }
 }

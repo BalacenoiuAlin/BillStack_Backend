@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BillStack_Backend.Migrations
 {
     [DbContext(typeof(BillStackDbContext))]
-    [Migration("20250713164144_Initial commit, with creation of bill table")]
-    partial class Initialcommitwithcreationofbilltable
+    [Migration("20250715115800_Re-upload of Bill DB")]
+    partial class ReuploadofBillDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -78,50 +78,7 @@ namespace BillStack_Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("Bills");
-                });
-
-            modelBuilder.Entity("BillStack_Backend.Models.Domains.Users", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Role")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("BillStack_Backend.Models.Domains.Bill", b =>
-                {
-                    b.HasOne("BillStack_Backend.Models.Domains.Users", "User")
-                        .WithMany("Bills")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("BillStack_Backend.Models.Domains.Users", b =>
-                {
-                    b.Navigation("Bills");
                 });
 #pragma warning restore 612, 618
         }

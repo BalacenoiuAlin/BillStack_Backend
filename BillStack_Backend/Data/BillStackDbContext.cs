@@ -5,7 +5,7 @@ namespace BillStack_Backend.Data
 {
     public class BillStackDbContext : DbContext
     {
-        public BillStackDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
+        public BillStackDbContext(DbContextOptions<BillStackDbContext> dbContextOptions) : base(dbContextOptions)
         {
             
         }
