@@ -7,7 +7,6 @@ namespace BillStack_Backend.Controllers
 {
     [ApiController]
     [Route("api/[controller]")] //https:localhost:xxx/api/Bill
-    [Authorize]
     public class BillController : ControllerBase
     {
         private readonly IBillService billService;
@@ -19,6 +18,7 @@ namespace BillStack_Backend.Controllers
 
         // POST: api/Bill
         [HttpPost]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> CreateBill([FromBody] CreateBillDto createBillDto)
         {
             if(!ModelState.IsValid)
@@ -32,6 +32,7 @@ namespace BillStack_Backend.Controllers
 
         // GET: api/Bill
         [HttpGet]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> GetBills()
         {
             var bills = await billService.GetAllBillsAsync();
@@ -41,6 +42,7 @@ namespace BillStack_Backend.Controllers
         // GET: api/Bill/{id}
         [HttpGet]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> GetBillById([FromRoute] Guid id)
         {
             var bill = await billService.GetBillByIdAsync(id);
@@ -53,6 +55,7 @@ namespace BillStack_Backend.Controllers
         // PUT: api/Bill/{id}
         [HttpPut]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> UpdateBillById([FromRoute] Guid id, [FromBody] UpdateBillDto updateBillDto)
         {
             if (!ModelState.IsValid)
@@ -69,6 +72,7 @@ namespace BillStack_Backend.Controllers
         // PATCH: api/Bill/{id}
         [HttpPatch]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> UpdateBillStatusById([FromRoute] Guid id, [FromBody] UpdateBillStateDto updateBillStateDto)
         {
             if(!ModelState.IsValid)
@@ -85,6 +89,7 @@ namespace BillStack_Backend.Controllers
         // DELETE: api/Bill/{id}
         [HttpDelete]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> DeleteBillById([FromRoute] Guid id)
         {
             var deletedBill = await billService.DeleteBillByIdAsync(id);

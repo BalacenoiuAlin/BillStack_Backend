@@ -1,4 +1,5 @@
 ﻿using BillStack_Backend.Models.DTO;
+using BillStack_Backend.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,10 +10,12 @@ namespace BillStack_Backend.Controllers
     public class AuthController : ControllerBase
     {
         private readonly UserManager<IdentityUser> userManager;
+        private readonly ITokenRepository tokenRepository;
 
-        public AuthController(UserManager<IdentityUser> userManager)
+        public AuthController(UserManager<IdentityUser> userManager, ITokenRepository tokenRepository)
         {
             this.userManager = userManager;
+            this.tokenRepository = tokenRepository;
         }
 
         // Create a new account
@@ -20,6 +23,9 @@ namespace BillStack_Backend.Controllers
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterAccountDto registerAccountDto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var identityUser = new IdentityUser
             {
                 Email = registerAccountDto.Email,
@@ -49,16 +55,25 @@ namespace BillStack_Backend.Controllers
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] LoginAccountDto loginAccountDto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var user = await userManager.FindByEmailAsync(loginAccountDto.Email);
 
-            if ( user != null && await userManager.CheckPasswordAsync(user, loginAccountDto.PasswordHash))
+            if (user != null && await userManager.CheckPasswordAsync(user, loginAccountDto.PasswordHash))
             {
-                // Create JWT Token
+                var roles = await userManager.GetRolesAsync(user);
 
-                return Ok("Login successful!");
+                if (roles != null && roles.Any())
+                {
+                    var jwtToken = tokenRepository.CreateJWTToken(user, roles.ToList());
+                    return Ok(new { Token = jwtToken });
+                }
+
+                return Unauthorized("User does not have any roles.");
             }
 
-            return Unauthorized("Invalid name or password!");
+            return Unauthorized("Invalid email or password.");
         }
 
     }
