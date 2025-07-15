@@ -2,6 +2,7 @@
 using BillStack_Backend.Models.Domains;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 
 namespace BillStack_Backend.Repositories
 {
@@ -84,5 +85,34 @@ namespace BillStack_Backend.Repositories
             return existingBill;
         }
 
+        public async Task<Bill> GetIdenticalBillAsync(Bill bill)
+        {
+            var identicalBill = await dbContext.Bills.FirstOrDefaultAsync(
+                x =>
+                x.Name == bill.Name &&
+                x.ImageUrl == bill.ImageUrl &&
+                x.Type == bill.Type &&
+                x.Info == bill.Info &&
+                x.Description == bill.Description &&
+                x.Price == bill.Price &&
+                x.DueDate == bill.DueDate
+                );
+
+            return identicalBill;
+        }
+
+        public async Task<Bill> GetIdenticalBillAsync(Bill bill, Guid id)
+        {
+            return await dbContext.Bills.FirstOrDefaultAsync(x =>
+                x.Id != id &&
+                x.Name == bill.Name &&
+                x.Type == bill.Type &&
+                x.BillType == bill.BillType &&
+                x.Info == bill.Info &&
+                x.Description == bill.Description &&
+                x.Price == bill.Price &&
+                x.DueDate == bill.DueDate
+            );
+        }
     }
 }

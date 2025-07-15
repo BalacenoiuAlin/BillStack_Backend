@@ -10,5 +10,7 @@ namespace BillStack_Backend.Repositories
         Task<Bill> UpdateBillByIdAsync(Guid id, Bill bill);
         Task<Bill> UpdateBillStateByIdAsync(Guid id, Bill bill);
         Task<Bill> DeleteBillByIdAsync(Guid id);
+        Task<Bill?> GetIdenticalBillAsync(Bill bill);
+        Task<Bill?> GetIdenticalBillAsync(Bill bill, Guid id);
     }
 }

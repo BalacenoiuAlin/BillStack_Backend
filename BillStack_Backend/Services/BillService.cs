@@ -1,7 +1,9 @@
-﻿using AutoMapper;
+﻿
+using AutoMapper;
 using BillStack_Backend.Models.Domains;
 using BillStack_Backend.Models.DTO;
 using BillStack_Backend.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace BillStack_Backend.Services
 {
@@ -19,6 +21,13 @@ namespace BillStack_Backend.Services
         {
             // Map dto to domain model
             var billDomainModel = mapper.Map<Bill>(createBillDto);
+
+            var duplicateBill =  await billRepository.GetIdenticalBillAsync(billDomainModel);
+
+            if(duplicateBill != null)
+            {
+                throw new InvalidOperationException("An identical bill already exists!");
+            }
 
             await billRepository.CreateBillAsync(billDomainModel);
 
@@ -56,16 +65,18 @@ namespace BillStack_Backend.Services
         {
             // Map dto to domain model
             var bill = mapper.Map<Bill>(updateBillDto);
+            bill.Id = id;
+
+            var duplicateBill = await billRepository.GetIdenticalBillAsync(bill, id);
+
+            if (duplicateBill != null)
+                throw new InvalidOperationException("A bill with the same fields already exists!");
 
             var updatedBill = await billRepository.UpdateBillByIdAsync(id, bill);
-
             if (updatedBill == null)
                 return null;
 
-            // Map domain model back to dto for client
-            var billDto = mapper.Map<ObtainBillDto>(updatedBill);
-
-            return billDto;
+            return mapper.Map<ObtainBillDto>(updatedBill);
         }
 
         public async Task<ObtainBillDto?> UpdateBillStatusByIdAsync(Guid id, UpdateBillStateDto updateBillStateDto)

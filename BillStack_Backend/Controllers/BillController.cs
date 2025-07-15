@@ -19,6 +19,11 @@ namespace BillStack_Backend.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateBill([FromBody] CreateBillDto createBillDto)
         {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var billDto = await billService.CreateBillAsync(createBillDto);
             return Ok(billDto);
         }
@@ -48,6 +53,10 @@ namespace BillStack_Backend.Controllers
         [Route("{id:Guid}")]
         public async Task<IActionResult> UpdateBillById([FromRoute] Guid id, [FromBody] UpdateBillDto updateBillDto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             var updatedBill = await billService.UpdateBillByIdAsync(id, updateBillDto);
             if (updatedBill == null)
                 return NotFound();
@@ -60,6 +69,10 @@ namespace BillStack_Backend.Controllers
         [Route("{id:Guid}")]
         public async Task<IActionResult> UpdateBillStatusById([FromRoute] Guid id, [FromBody] UpdateBillStateDto updateBillStateDto)
         {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             var updatedBill = await billService.UpdateBillStatusByIdAsync(id, updateBillStateDto);
             if (updatedBill == null)
                 return NotFound();
